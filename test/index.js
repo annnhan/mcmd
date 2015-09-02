@@ -5,5 +5,9 @@
 define(function (require, exports, module) {
     var log = require('log.js');
     var msg = require('msg.js');
-    log(msg);
+
+    exports.log = function () {
+        log(msg);
+    }
+
 });
