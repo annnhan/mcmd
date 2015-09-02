@@ -5,4 +5,11 @@
 
 
 module.exports = {
+    getModuleExports: function (mod) {
+        if (!mod.exports) {
+            mod.exports = {};
+            mod.factory(mcmd.require, mod.exports, mod);
+        }
+        return mod.exports;
+    }
 };

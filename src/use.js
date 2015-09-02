@@ -9,14 +9,16 @@ var load = require('./load');
 module.exports = function use(ids, callback) {
 
     if (!Array.isArray(ids)) {
-        id = [ids]
+        ids = [ids]
     }
 
     Promise.all(ids.map(function (id) {
-        return load(id);
+        return load(mcmd.config.root + id);
     })).then(function (list) {
-        callback.apply(window, list);
-    }, function (err) {
-        throw err;
+        if (typeof callback === 'function') {
+            callback.apply(window, list);
+        }
+    }, function (errorInfo) {
+        throw errorInfo;
     });
 }

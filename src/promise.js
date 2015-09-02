@@ -83,7 +83,7 @@ fn.reject = function (val) {
 }
 
 Promise.all = function (arr) {
-    return Promise(function (resolve, reject) {
+    return new Promise(function (resolve, reject) {
         var len = arr.length,
             i = -1,
             count = 0,
