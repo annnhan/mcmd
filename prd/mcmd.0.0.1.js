@@ -361,7 +361,7 @@ module.exports = function (id) {
         return util.getModuleExports(mod);
     }
     else {
-        throw 'can not get module by id:' + id;
+        throw 'can not get module by from:' + id;
     }
 }
 
