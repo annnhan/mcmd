@@ -18,12 +18,8 @@ module.exports = function (factory) {
             return new Promise(function (resolve, reject) {
                 id = mcmd.config.root + id;
                 var depMode = mcmd.modules[id] || Module.create(id);
-                depMode.on('complate', function () {
-                    resolve();
-                });
-                depMode.on('error', function (info) {
-                    reject(info);
-                });
+                depMode.on('complate', resolve);
+                depMode.on('error', reject);
             });
         })).then(function () {
             mod.setStatus(mcmd.MODULE_STATUS.COMPLETED);
@@ -38,9 +34,9 @@ module.exports = function (factory) {
 
 // 获取当前执行的script节点
 function getCurrentScript() {
-    var DOC = document;
-    if(DOC.currentScript) {
-        return DOC.currentScript.src;
+    var doc = document;
+    if(doc.currentScript) {
+        return doc.currentScript.src;
     }
     var stack;
     try {
@@ -164,7 +160,10 @@ Module.prototype.load = function () {
 
 Module.prototype.on = function (event, callback) {
     (this.callbacks[event] || (this.callbacks[event] = [])).push(callback);
-    if ((this.status === mcmd.MODULE_STATUS.LOADING && event === 'load') || (this.status === mcmd.MODULE_STATUS.COMPLETED && event === 'complate')) {
+    if (
+        (this.status === mcmd.MODULE_STATUS.LOADING && event === 'load') ||
+        (this.status === mcmd.MODULE_STATUS.COMPLETED && event === 'complate')
+    ) {
         callback(this);
     }
     if (this.status === mcmd.MODULE_STATUS.ERROR && event === 'error') {

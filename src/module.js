@@ -33,7 +33,10 @@ Module.prototype.load = function () {
 
 Module.prototype.on = function (event, callback) {
     (this.callbacks[event] || (this.callbacks[event] = [])).push(callback);
-    if ((this.status === mcmd.MODULE_STATUS.LOADING && event === 'load') || (this.status === mcmd.MODULE_STATUS.COMPLETED && event === 'complate')) {
+    if (
+        (this.status === mcmd.MODULE_STATUS.LOADING && event === 'load') ||
+        (this.status === mcmd.MODULE_STATUS.COMPLETED && event === 'complate')
+    ) {
         callback(this);
     }
     if (this.status === mcmd.MODULE_STATUS.ERROR && event === 'error') {
