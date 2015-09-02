@@ -16,7 +16,8 @@
     "url": "https://github.com/hanan198501/mcmd/issues"
   },
   "homepage": "https://github.com/hanan198501/mcmd",
-  "devDependencies": {
+  "dependencies": {
+    "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "browserify": "11.0.1",
     "gulp": "^3.6.2",
