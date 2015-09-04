@@ -17,7 +17,7 @@ module.exports = function (factory) {
             return new Promise(function (resolve, reject) {
                 id = mcmd.config.root + id;
                 var depMode = mcmd.modules[id] || Module.create(id);
-                depMode.on('complate', resolve);
+                depMode.on('complete', resolve);
                 depMode.on('error', reject);
             });
         })).then(function () {

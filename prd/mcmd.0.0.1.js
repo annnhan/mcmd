@@ -18,7 +18,7 @@ module.exports = function (factory) {
             return new Promise(function (resolve, reject) {
                 id = mcmd.config.root + id;
                 var depMode = mcmd.modules[id] || Module.create(id);
-                depMode.on('complate', resolve);
+                depMode.on('complete', resolve);
                 depMode.on('error', reject);
             });
         })).then(function () {
@@ -85,7 +85,7 @@ var util = require('./util');
 module.exports = function (id, callback) {
     return new Promise(function (resolve, reject) {
         var mod =  mcmd.modules[id] || Module.create(id);
-        mod.on('complate', function () {
+        mod.on('complete', function () {
             var exp = util.getModuleExports(mod);
             if (typeof callback === 'function') {
                 callback(exp);
@@ -162,7 +162,7 @@ Module.prototype.on = function (event, callback) {
     (this.callbacks[event] || (this.callbacks[event] = [])).push(callback);
     if (
         (this.status === mcmd.MODULE_STATUS.LOADING && event === 'load') ||
-        (this.status === mcmd.MODULE_STATUS.COMPLETED && event === 'complate')
+        (this.status === mcmd.MODULE_STATUS.COMPLETED && event === 'complete')
     ) {
         callback(this);
     }
@@ -185,7 +185,7 @@ Module.prototype.setStatus = function (status, info) {
                 this.fire('load');
                 break;
             case mcmd.MODULE_STATUS.COMPLETED:
-                this.fire('complate');
+                this.fire('complete');
                 break;
             case mcmd.MODULE_STATUS.ERROR:
                 this.fire('error', info);
