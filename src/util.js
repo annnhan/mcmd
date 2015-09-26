@@ -6,10 +6,12 @@
 
 module.exports = {
     getModuleExports: function (mod) {
+        var returns;
         if (!mod.exports) {
             mod.exports = {};
-            mod.factory(mcmd.require, mod.exports, mod);
+            returns = mod.factory(mcmd.require, mod.exports, mod);
         }
-        return mod.exports;
+        //优先使用return传递的模块接口
+        return returns || mod.exports;
     }
 };
